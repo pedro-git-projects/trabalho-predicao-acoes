@@ -6,7 +6,7 @@ class Petroleo:
         self.entrada = caminho_entrada
         self.saida = caminho_saida
 
-    def preprocess(self):
+    def preprocess(self) -> pd.DataFrame:
         data = pd.read_csv(
             self.entrada,
             thousands=".",
@@ -33,8 +33,12 @@ class Petroleo:
         data["Date"] = data["Date"].dt.strftime("%Y-%m-%d")
 
         # Reordenando as colunas
-        data = data[["Date", "Open", "High", "Low", "Close Adj", "Volume", "Var%"]]
+        # e removendo var%
+        data = data[["Date", "Open", "High", "Low", "Close Adj", "Volume"]]
 
         data.to_csv(self.saida, index=False)
 
-        return data
+        if isinstance(data, pd.Series):
+            return data.to_frame()
+        else:
+            return data

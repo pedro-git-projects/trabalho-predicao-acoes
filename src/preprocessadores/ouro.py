@@ -33,9 +33,13 @@ class Ouro:
         data["Date"] = data["Date"].dt.strftime("%Y-%m-%d")
 
         # Reordenando as colunas
-        data = data[["Date", "Open", "High", "Low", "Close Adj", "Volume", "Var%"]]
+        # e removendo var%
+        data = data[["Date", "Open", "High", "Low", "Close Adj", "Volume"]]
 
         # Salvando a saída em um novo arquivo
         data.to_csv(self.saida, index=False)
 
-        return data
+        if isinstance(data, pd.Series):
+            return data.to_frame()
+        else:
+            return data
