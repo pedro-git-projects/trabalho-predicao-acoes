@@ -20,7 +20,7 @@ class Petroleo:
         data = data.rename(
             columns={
                 "Data": "Date",
-                "Último": "Close Adj",
+                "Último": "Adj Close",
                 "Abertura": "Open",
                 "Máxima": "High",
                 "Mínima": "Low",
@@ -34,7 +34,7 @@ class Petroleo:
 
         # Reordenando as colunas
         # e removendo var%
-        data = data[["Date", "Open", "High", "Low", "Close Adj", "Volume"]]
+        data = data[["Date", "Open", "High", "Low", "Adj Close", "Volume"]]
 
         data.to_csv(self.saida, index=False)
 
