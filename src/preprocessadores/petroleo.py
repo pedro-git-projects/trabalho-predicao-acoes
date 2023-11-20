@@ -20,7 +20,7 @@ class Petroleo:
         data = data.rename(
             columns={
                 "Data": "Date",
-                "Último": "Close",
+                "Último": "Close Adj",
                 "Abertura": "Open",
                 "Máxima": "High",
                 "Mínima": "Low",
@@ -31,6 +31,9 @@ class Petroleo:
 
         # Formatando a data de acordo com o aqruivo brl.csv
         data["Date"] = data["Date"].dt.strftime("%Y-%m-%d")
+
+        # Reordenando as colunas
+        data = data[["Date", "Open", "High", "Low", "Close Adj", "Volume", "Var%"]]
 
         data.to_csv(self.saida, index=False)
 

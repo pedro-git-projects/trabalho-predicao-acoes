@@ -20,7 +20,7 @@ class Ouro:
         data = data.rename(
             columns={
                 "Data": "Date",
-                "Último": "Close",
+                "Último": "Close Adj",
                 "Abertura": "Open",
                 "Máxima": "High",
                 "Mínima": "Low",
@@ -29,10 +29,13 @@ class Ouro:
             }
         )
 
-        # convertendo a data para o mesmo formato que no brl.csv
+        # Convertendo a data para o mesmo formato que no brl.csv
         data["Date"] = data["Date"].dt.strftime("%Y-%m-%d")
 
-        # salvando a saída em um novo arquivo
+        # Reordenando as colunas
+        data = data[["Date", "Open", "High", "Low", "Close Adj", "Volume", "Var%"]]
+
+        # Salvando a saída em um novo arquivo
         data.to_csv(self.saida, index=False)
 
         return data
