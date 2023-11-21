@@ -4,15 +4,21 @@ from preprocessadores.petroleo import Petroleo
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
+from sklearn.svm import SVR
 import pandas as pd
 import numpy as np
 
 
 class Preditor:
-    def __init__(self, intervalo_datas=None):
-        self.model = LinearRegression()
-        self.carregar_dados(intervalo_datas)
+    def __init__(self, intervalo_datas=None, modelo="linear"):
+        if modelo == "linear":
+            self.model = LinearRegression()
+        elif modelo == "svm":
+            self.model = SVR()  # You can customize SVR parameters as needed
+        else:
+            raise ValueError("Modelo não suportado. Escolha 'linear' ou 'svm'.")
 
+        self.carregar_dados(intervalo_datas)
         self.dados = (
             self.brl,
             self.bvsp,
@@ -106,7 +112,7 @@ class Preditor:
             self.features, self.label, test_size=0.25
         )
 
-    def fit(self) -> LinearRegression:
+    def fit(self):
         return self.model.fit(self.X_train, self.y_train)
 
     def predict(self):
@@ -114,6 +120,9 @@ class Preditor:
 
     def mse(self):
         self.mse = mean_squared_error(self.y_test, self.prediction)
+        return self.mse
 
     def rmse(self):
+        self.mse()
         self.rmse = np.sqrt(self.mse)  # type: ignore
+        return self.rmse
