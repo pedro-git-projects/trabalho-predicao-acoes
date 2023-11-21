@@ -36,6 +36,19 @@ class Petroleo:
         # e removendo var%
         data = data[["Date", "Open", "High", "Low", "Adj Close", "Volume"]]
 
+        # Removendo o K e M, trocando vírgulas por pontos
+        data["Volume"] = (
+            data["Volume"]
+            .str.replace("K", "e3")  # type: ignore
+            .replace("", 0.0)
+            .replace({",": ".", "K": "e3", "M": "e6"}, regex=True)
+            .astype(float)
+        )
+
+        # Preenchendo valores vazios com a média
+        data["Volume"] = data["Volume"].fillna(data["Volume"].mean()) #type: ignore
+
+
         data.to_csv(self.saida, index=False)
 
         if isinstance(data, pd.Series):

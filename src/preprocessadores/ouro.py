@@ -36,6 +36,18 @@ class Ouro:
         # e removendo var%
         data = data[["Date", "Open", "High", "Low", "Adj Close", "Volume"]]
 
+        # Removendo o K e trocando vírgulas por pontos
+        data["Volume"] = (
+            data["Volume"]
+            .str.replace("K", "e3")  # type: ignore
+            .replace("", 0.0)
+            .replace({",": "."}, regex=True)
+            .astype(float)
+        )
+
+        # Preenchendo valores vazios com a média
+        data["Volume"] = data["Volume"].fillna(data["Volume"].mean())  # type: ignore
+
         # Salvando a saída em um novo arquivo
         data.to_csv(self.saida, index=False)
 
