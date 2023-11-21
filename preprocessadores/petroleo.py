@@ -2,11 +2,42 @@ import pandas as pd
 
 
 class Petroleo:
+    """
+    Classe responsável pelo pré-processamento de dados relacionados ao preço do petróleo.
+
+    Attributes:
+    - entrada (str): Caminho do arquivo de entrada contendo os dados brutos do petróleo.
+    - saida (str): Caminho do arquivo de saída onde os dados pré-processados serão salvos.
+
+    Methods:
+    - __init__(caminho_entrada, caminho_saida): Inicializa a instância da classe Petroleo.
+    - preprocess() -> pd.DataFrame: Realiza o pré-processamento dos dados de petróleo e salva o resultado no arquivo de saída.
+
+    Note:
+    - Esta classe espera que o arquivo de entrada tenha colunas específicas, como "Data", "Último", "Abertura", etc.
+    - Os dados são ajustados para terem uma estrutura similar ao arquivo "brl.csv".
+    - O pré-processamento inclui renomeação de colunas, conversão de datas, tratamento de valores ausentes e salvamento do arquivo final.
+    """  # noqa: E501
+
     def __init__(self, caminho_entrada: str, caminho_saida: str):
+        """
+        Inicializa a instância da classe Petroleo.
+
+        Args:
+        - caminho_entrada (str): Caminho do arquivo de entrada contendo os dados brutos do petróleo.
+        - caminho_saida (str): Caminho do arquivo de saída onde os dados pré-processados serão salvos.
+        """  # noqa: E501
+
         self.entrada = caminho_entrada
         self.saida = caminho_saida
 
     def preprocess(self) -> pd.DataFrame:
+        """
+        Realiza o pré-processamento dos dados de petróleo.
+
+        Returns:
+        - pd.DataFrame: DataFrame contendo os dados pré-processados do petróleo.
+        """
         data = pd.read_csv(
             self.entrada,
             thousands=".",
@@ -46,8 +77,7 @@ class Petroleo:
         )
 
         # Preenchendo valores vazios com a média
-        data["Volume"] = data["Volume"].fillna(data["Volume"].mean()) #type: ignore
-
+        data["Volume"] = data["Volume"].fillna(data["Volume"].mean())  # type: ignore
 
         data.to_csv(self.saida, index=False)
 

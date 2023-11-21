@@ -1,7 +1,6 @@
-import os
 from comparador.comparador import Comparador
-
 from preditor.preditor import Preditor
+import os
 
 
 def main():

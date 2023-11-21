@@ -2,11 +2,42 @@ import pandas as pd
 
 
 class Ouro:
+    """
+    Classe responsável pelo pré-processamento de dados relacionados ao preço do ouro.
+
+    Attributes:
+    - entrada (str): Caminho do arquivo de entrada contendo os dados brutos do ouro.
+    - saida (str): Caminho do arquivo de saída onde os dados pré-processados serão salvos.
+
+    Methods:
+    - __init__(caminho_entrada, caminho_saida): Inicializa a instância da classe Ouro.
+    - preprocess(): Realiza o pré-processamento dos dados de ouro e salva o resultado no arquivo de saída.
+
+    Note:
+    - Esta classe espera que o arquivo de entrada tenha colunas específicas, como "Data", "Último", "Abertura", etc.
+    - Os dados são ajustados para terem uma estrutura similar ao arquivo "brl.csv".
+    - O pré-processamento inclui renomeação de colunas, conversão de datas, tratamento de valores ausentes e salvamento do arquivo final.
+    """  # noqa: E501
+
     def __init__(self, caminho_entrada: str, caminho_saida: str):
+        """
+        Inicializa a instância da classe Ouro.
+
+        Args:
+        - caminho_entrada (str): Caminho do arquivo de entrada contendo os dados brutos do ouro.
+        - caminho_saida (str): Caminho do arquivo de saída onde os dados pré-processados serão salvos.
+        """  # noqa: E501
+
         self.entrada = caminho_entrada
         self.saida = caminho_saida
 
     def preprocess(self):
+        """
+        Realiza o pré-processamento dos dados de ouro.
+
+        Returns:
+        - pd.DataFrame: DataFrame contendo os dados pré-processados do ouro.
+        """
         data = pd.read_csv(
             self.entrada,
             thousands=".",
