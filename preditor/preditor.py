@@ -31,7 +31,7 @@ class Preditor:
 
     Methods:
     - __init__(intervalo_datas=None, modelo="linear"): Inicializa a instância da classe.
-    - carregar_dados(intervalo_datas=None): Carrega os dados necessários para o treinamento e teste do modelo.
+    - __carregar_dados(intervalo_datas=None): Carrega os dados necessários para o treinamento e teste do modelo.
     - __combinar_dataframes(dataframes, sufixos=None): Combina os DataFrames de acordo com as colunas de datas.
     - __selecionar_features_e_label(): Seleciona as features e a label a partir do DataFrame combinado.
     - __selecionar_treino_e_teste(): Divide os dados em conjuntos de treino e teste.
@@ -63,7 +63,7 @@ class Preditor:
         else:
             raise ValueError("Modelo não suportado. Escolha 'linear' ou 'svm'.")
 
-        self.carregar_dados(intervalo_datas)
+        self.__carregar_dados(intervalo_datas)
         self.dados = (
             self.brl,
             self.bvsp,
@@ -80,7 +80,7 @@ class Preditor:
         self.__selecionar_features_e_label()
         self.__selecionar_treino_e_teste()
 
-    def carregar_dados(self, intervalo_datas=None):
+    def __carregar_dados(self, intervalo_datas=None):
         """
         Carrega dados de diferentes fontes para os DataFrames da classe.
 
