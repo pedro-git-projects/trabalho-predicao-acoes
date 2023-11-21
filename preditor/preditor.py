@@ -105,7 +105,6 @@ class Preditor:
                 print("Erro: Formato de data inválido. Utilize o formato ISO.")
                 return
 
-            # Check if the date range is valid
             if inicio >= fim:
                 print("Erro: A data de início deve ser anterior à data de término.")
                 print("Os valores padrão serão utilizados...")
